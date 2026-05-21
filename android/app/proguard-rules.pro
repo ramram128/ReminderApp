@@ -7,4 +7,19 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Add any project specific keep options here:
+# React Native
+-keep class com.facebook.react.bridge.CatalystInstanceImpl { *; }
+-keep class com.facebook.react.bridge.JavaScriptExecutor { *; }
+-keep class com.facebook.react.bridge.ReactBridge { *; }
+-keep class com.facebook.react.bridge.BaseJavaModule { *; }
+-keep class com.facebook.react.uimanager.ViewManager { *; }
+-keep class com.facebook.react.uimanager.events.Event { *; }
+
+# Notifee
+-keep class io.invertase.notifee.** { *; }
+
+# AsyncStorage
+-keep class com.reactnativecommunity.asyncstorage.** { *; }
+
+# Keep filenames and line numbers for better error reporting in crashlytics
+-keepattributes SourceFile,LineNumberTable
