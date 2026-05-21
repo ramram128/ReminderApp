@@ -56,7 +56,10 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>fetch</string>
 	</array>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>ReminderApp needs notification access to remind you at the scheduled time.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

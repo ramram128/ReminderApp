@@ -227,7 +227,7 @@ const HomeScreen = ({ navigation }) => {
           <DateTimePicker
             value={selectedDate}
             mode="time"
-            is24Hour={true}
+            {...(Platform.OS === 'android' ? { is24Hour: true } : {})}
             display="default"
             onChange={onTimeChange}
           />

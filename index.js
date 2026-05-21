@@ -2,7 +2,7 @@
  * @format
  */
 
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 import notifee, { EventType } from '@notifee/react-native';
 import App from './App';
 import { name as appName } from './app.json';
@@ -19,10 +19,12 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
 });
 
 // Register foreground service for alarms to work when app is killed
-notifee.registerForegroundService((notification) => {
-  return new Promise(() => {
-    console.log('Background foreground service started for alarm', notification.id);
+if (Platform.OS === 'android') {
+  notifee.registerForegroundService((notification) => {
+    return new Promise(() => {
+      console.log('Background foreground service started for alarm', notification.id);
+    });
   });
-});
+}
 
 AppRegistry.registerComponent(appName, () => App);

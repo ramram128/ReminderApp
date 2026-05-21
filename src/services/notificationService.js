@@ -135,10 +135,12 @@ class NotificationService {
     const trigger = {
       type: TriggerType.TIMESTAMP,
       timestamp: timestamp,
-      alarmManager: {
-        allowWhileIdle: true,
-      },
-      accuracy: TriggerAccuracy.EXACT,
+      ...(Platform.OS === 'android' && {
+        alarmManager: {
+          allowWhileIdle: true,
+        },
+        accuracy: TriggerAccuracy.EXACT,
+      }),
     };
 
     try {
@@ -178,7 +180,7 @@ class NotificationService {
             autoCancel: false, // Don't dismiss automatically for alarms
             asAlarmClock: isAlarm, // Important for real alarm behavior
             // Add foreground service for maximum reliability
-            foregroundService: isAlarm,
+            foregroundService: Platform.OS === 'android' ? isAlarm : false,
           },
           ios: {
             sound: 'default',
@@ -225,13 +227,15 @@ class NotificationService {
     });
 
     // Register foreground service for alarms
-    notifee.registerForegroundService((notification) => {
-      return new Promise(() => {
-        // This service will keep running while the alarm is active
-        // The sound and looping are handled by the system because of the channel/category
-        console.log('Foreground service started for alarm', notification.id);
+    if (Platform.OS === 'android') {
+      notifee.registerForegroundService((notification) => {
+        return new Promise(() => {
+          // This service will keep running while the alarm is active
+          // The sound and looping are handled by the system because of the channel/category
+          console.log('Foreground service started for alarm', notification.id);
+        });
       });
-    });
+    }
 
     // Background events are handled in index.js via notifee.onBackgroundEvent
     return unsubscribeForeground;
