@@ -1,6 +1,7 @@
 import notifee, {
   AndroidImportance,
   TriggerType,
+  TriggerAccuracy,
   EventType,
   AndroidPermissionStatus,
   AndroidCategory,
@@ -137,6 +138,7 @@ class NotificationService {
       alarmManager: {
         allowWhileIdle: true,
       },
+      accuracy: TriggerAccuracy.EXACT,
     };
 
     try {
